@@ -1,15 +1,15 @@
-import { cart, addToCart } from "../data/cart.js";
-import { formatCurrency } from "./utils/money.js";
-import { products } from "../data/products.js";
+import * as cartModules from "../data/cart.js";
+import * as formatCurrencyModules from "./utils/money.js";
+import * as productDatabase from "../data/products.js";
 
 renderItems();
-addToCart();
+cartModules.addToCart();
 
 function renderItems() {
   let productsHTML = "";
   let productContainer = document.querySelector(".products-grid");
 
-  products.forEach((product) => {
+  productDatabase.products.forEach((product) => {
     productsHTML += `
     <div class="product-container">
         <div class="product-image-container">
@@ -27,7 +27,7 @@ function renderItems() {
           </div>
         </div>
         <div class="product-price">
-          $${formatCurrency(product.priceCents)}
+          $${formatCurrencyModules.formatCurrency(product.priceCents)}
         </div>
 
         <div class="product-quantity-container">
@@ -49,7 +49,7 @@ function renderItems() {
           <img src="images/icons/checkmark.png">
           Added
         </div>
-        <button class="add-to-cart-button button-primary" data-product-Id = "${
+        <button class="add-to-cart-button button-primary" data-product-id = "${
           product.id
         }">
           Add to Cart

@@ -1,12 +1,12 @@
-import { cart, removeFromCart } from "../data/cart.js";
-import { formatCurrency } from "./utils/money.js";
-import { products } from "../data/products.js";
+import * as cartModules from "../data/cart.js";
+import * as formatCurrencyModule from "./utils/money.js";
+import * as productsModules from "../data/products.js";
 
 let cartSummaryHTML = "";
-cart.forEach((cartItem) => {
+cartModules.cart.forEach((cartItem) => {
   const CartItemProductId = cartItem.id;
   let matchingProduct;
-  products.forEach((product) => {
+  productsModules.products.forEach((product) => {
     if (product.id === CartItemProductId) {
       matchingProduct = product;
     }
@@ -28,7 +28,7 @@ cart.forEach((cartItem) => {
             
           ${matchingProduct.name}
           </div>
-          <div class="product-price">${formatCurrency(
+          <div class="product-price">${formatCurrencyModule.formatCurrency(
             matchingProduct.priceCents
           )}</div>
           <div class="product-quantity">
@@ -86,9 +86,9 @@ cart.forEach((cartItem) => {
 document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 document.querySelectorAll(".js-delete-link").forEach((deleteBtnLink) => {
   deleteBtnLink.addEventListener("click", () => {
-    const productID = deleteBtnLink.dataset.productId;
-    removeFromCart(productID);
-    console.log(cart);
+    const productID = deleteBtnLink.dataset.productid;
+    cartModules.removeFromCart(productID);
+    console.log(cartModules.cart);
 
     const container = document.querySelector(
       `.js-cart-item-container-${productID}`
